@@ -1,0 +1,47 @@
+<div class="w-full max-w-md">
+  <div class="mb-4">
+    <input
+      class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+      [(ngModel)]="newTodoTitle"
+      placeholder="Add new task"
+    />
+    <button
+      class="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full"
+      (click)="addTodo()"
+    >
+      Add Task
+    </button>
+  </div>
+  <ul class="list-reset">
+    <li
+      *ngFor="let todo of todos"
+      class="flex items-center justify-between mb-2 p-2 bg-white shadow rounded"
+    >
+      <input
+        type="checkbox"
+        [checked]="todo.completed"
+        (change)="toggleCompletion(todo)"
+        class="mr-2"
+      />
+      <span
+        class="flex-auto"
+        [ngClass]="{ 'line-through': todo.completed }"
+        (dblclick)="editTodo(todo)"
+      >
+        <input
+          *ngIf="todo.editing"
+          [(ngModel)]="todo.title"
+          class="form-input block w-full"
+          (blur)="finishEditing(todo)"
+        />
+        <span *ngIf="!todo.editing">{{ todo.title }}</span>
+      </span>
+      <button
+        (click)="deleteTodo(todo)"
+        class="ml-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+      >
+        Delete
+      </button>
+    </li>
+  </ul>
+</div>
